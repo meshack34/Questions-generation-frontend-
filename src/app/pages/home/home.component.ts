@@ -7,19 +7,20 @@ import { QuestionService } from '../../services/question.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  textContent: string = '';
+  text: string = '';
+  questions: any[] = [];
 
-  constructor(private questionService: QuestionService) {}
+  constructor(private questionService: QuestionService) { }
 
-  generateSimpleQuestions(): void {
-    this.questionService.generateSimpleQuestions(this.textContent).subscribe(response => {
-      console.log('Simple Questions:', response);
-    });
-  }
-
-  generateMultipleChoiceQuestions(): void {
-    this.questionService.generateMultipleChoiceQuestions(this.textContent).subscribe(response => {
-      console.log('Multiple Choice Questions:', response);
-    });
+  onGenerateQuestions(): void {
+    const requestData = { text: this.text, use_evaluator: true, num_questions: 10, answer_style: 'short' };
+    this.questionService.generateQuestions(requestData).subscribe(
+      data => {
+        this.questions = data.questions;
+      },
+      err => {
+        console.error('Question generation failed', err);
+      }
+    );
   }
 }

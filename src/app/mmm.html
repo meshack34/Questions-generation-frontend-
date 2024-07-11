@@ -1,0 +1,181 @@
+<footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Question Generator</h5>
+          <p class="grey-text text-lighten-4">Generate questions easily and efficiently.</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" routerLink="/">Home</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">About</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+        © 2024 Question Generator
+      </div>
+    </div>
+  </footer>
+  
+
+  import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss']
+})
+export class FooterComponent {}
+
+<nav>
+    <div class="nav-wrapper">
+      <a routerLink="/" class="brand-logo">Question Generator</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li *ngIf="!authService.loggedIn"><a routerLink="/login">Login</a></li>
+        <li *ngIf="!authService.loggedIn"><a routerLink="/register">Register</a></li>
+        <li *ngIf="authService.loggedIn"><a (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  import { Component } from '@angular/core';
+  import { AuthService } from '../../services/auth.service';
+  
+  @Component({
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss']
+  })
+  export class NavbarComponent {
+    constructor(public authService: AuthService) {}
+  
+    logout() {
+      this.authService.logout();
+    }
+  }
+
+  
+  import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private baseUrl = 'http://127.0.0.1:8000/api';
+
+  constructor(private http: HttpClient, private router: Router) { }
+
+  register(user: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register/`, user).pipe(
+      tap(() => this.router.navigate(['/login']))
+    );
+  }
+
+  login(credentials: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login/`, credentials).pipe(
+      tap(() => this.router.navigate(['/home']))
+    );
+  }
+
+  getUserDetails(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/user-detail/`);
+  }
+
+  logout() {
+    // Implementation of logout
+  }
+
+  get loggedIn(): boolean {
+    // Implementation to check if user is logged in
+    return !!localStorage.getItem('token');
+  }
+}
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {}
+
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    RegisterComponent,
+    LoginComponent,
+    HomeComponent,
+    NavbarComponent,
+    FooterComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Question Generation System</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from './pages/register/register.component';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

@@ -1,6 +1,10 @@
-<h2>Generate Questions</h2>
-<textarea [(ngModel)]="textContent" placeholder="Enter text content"></textarea>
-<div>
-  <button (click)="generateSimpleQuestions()">Generate Questions with Simple Answers</button>
-  <button (click)="generateMultipleChoiceQuestions()">Generate Multiple Choice Questions</button>
+<form (ngSubmit)="onGenerateQuestions()">
+  <textarea [(ngModel)]="text" name="text" placeholder="Enter text" required></textarea>
+  <button type="submit">Generate Questions</button>
+</form>
+<div *ngIf="questions.length > 0">
+  <h3>Generated Questions</h3>
+  <ul>
+    <li *ngFor="let question of questions">{{ question.question }}</li>
+  </ul>
 </div>

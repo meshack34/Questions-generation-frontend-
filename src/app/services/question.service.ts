@@ -6,15 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class QuestionService {
-  private baseUrl = 'http://localhost:8000/api'; // Adjust the base URL as needed
+  private apiUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient) { }
 
-  generateSimpleQuestions(textContent: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/generate-simple-questions/`, { textContent });
-  }
-
-  generateMultipleChoiceQuestions(textContent: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/generate-multiple-choice-questions/`, { textContent });
+  generateQuestions(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/generate-questions/`, data);
   }
 }
