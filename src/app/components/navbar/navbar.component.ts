@@ -1,5 +1,5 @@
-// navbar.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -7,10 +7,16 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
-  constructor(public authService: AuthService) {}
+export class NavbarComponent implements OnInit {
+
+  constructor(public authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    // Optional: Initialization logic
+  }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout(); // Call logout method in AuthService
+    this.router.navigate(['/login']); // Navigate to login page
   }
 }

@@ -1,4 +1,5 @@
-// auth.service.ts
+
+
 import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -11,7 +12,6 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class AuthService {
   private baseUrl = 'http://127.0.0.1:8000/api';
-
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -26,23 +26,19 @@ export class AuthService {
 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login/`, credentials).pipe(
-      tap(() => this.router.navigate(['/home']))
+      tap((response: any) => {
+        localStorage.setItem('token', response.token); // Store token upon successful login
+        this.router.navigate(['/home']); // Navigate to authenticated route
+      })
     );
   }
 
-  getUserDetails(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/user-detail/`);
-  }
-
   logout() {
-    // Clear token from localStorage
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem('token');
-    }
-    // Optional: Implement any other logout logic, e.g., redirecting to login page
+    localStorage.removeItem('token'); // Clear token on logout
+    this.router.navigate(['/login']); // Navigate to login page
   }
 
-  get loggedIn(): boolean {
+  loggedIn(): boolean {
     // Check if token exists in localStorage
     if (isPlatformBrowser(this.platformId)) {
       return !!localStorage.getItem('token');
@@ -50,6 +46,3 @@ export class AuthService {
     return false; // Return false if localStorage is not available (e.g., SSR)
   }
 }
-
-
-
