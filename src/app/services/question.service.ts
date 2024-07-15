@@ -21,7 +21,6 @@ export class QuestionService {
     return this.http.post(`${this.baseUrl}/generate-questions/`, data, { headers }).pipe(
       catchError(error => {
         if (error.status === 401 && error.error.detail === 'Given token not valid for any token type') {
-          // Token is invalid or expired, try to refresh it
           return this.authService.refreshToken().pipe(
             switchMap(() => {
               token = this.authService.getToken();
