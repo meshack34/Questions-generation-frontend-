@@ -3,17 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { QuestionService } from '../../services/question.service';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-
-
 export class HomeComponent implements OnInit {
   questionForm!: FormGroup;
   submitted = false;
+  loading = false;
+  questions: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,20 +31,26 @@ export class HomeComponent implements OnInit {
   get f() {
     return this.questionForm.controls;
   }
+
   onSubmit() {
     this.submitted = true;
+    this.loading = true;
 
     if (this.questionForm.invalid) {
+      this.loading = false;
       return;
     }
 
     this.questionService.generateQuestions(this.questionForm.value)
       .subscribe(
         data => {
-          console.log('Generated questions:', data);
+          console.log('Generated questions:', data); // Debugging
+          this.questions = data.questions || []; // Ensure questions are assigned
+          this.loading = false;
         },
         error => {
           console.error('Error generating questions:', error);
+          this.loading = false;
         }
       );
   }
