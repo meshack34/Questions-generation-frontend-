@@ -32,23 +32,23 @@ export class HomeComponent implements OnInit {
     return this.questionForm.controls;
   }
 
-
-
   onSubmit() {
     this.submitted = true;
     this.loading = true;
-  
+
     if (this.questionForm.invalid) {
       this.loading = false;
       return;
     }
-  
+
     this.questionService.generateQuestions(this.questionForm.value)
       .subscribe(
         data => {
-          console.log('Generated questions:', data); // Debugging
-          this.questions = data.questions || []; // Ensure questions are assigned
-          console.log('Processed questions:', this.questions); // Log processed questions
+          if (data && data.questions) {
+            this.questions = data.questions;
+          } else {
+            this.questions = [];
+          }
           this.loading = false;
         },
         error => {
@@ -57,8 +57,6 @@ export class HomeComponent implements OnInit {
         }
       );
   }
-
- 
 
   logout() {
     this.authService.logout();

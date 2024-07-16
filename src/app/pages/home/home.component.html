@@ -41,8 +41,8 @@
     <ul>
       <li *ngFor="let question of questions">
         {{ question.question }}
-        <ul *ngIf="question.answer && question.answer.length > 0">
-          <li *ngFor="let ans of question.answer">{{ ans.text }}</li> <!-- Adjust this line based on your data structure -->
+        <ul *ngIf="question.answer">
+          <li>{{ question.answer }}</li>
         </ul>
       </li>
     </ul>

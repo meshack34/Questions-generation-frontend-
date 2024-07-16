@@ -14,8 +14,6 @@ export class QuestionService {
 
   generateQuestions(data: any): Observable<any> {
     let token = this.authService.getToken();
-    console.log('Retrieved token:', token);
-
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : new HttpHeaders();
 
     return this.http.post(`${this.baseUrl}/generate-questions/`, data, { headers }).pipe(
@@ -24,7 +22,6 @@ export class QuestionService {
           return this.authService.refreshToken().pipe(
             switchMap(() => {
               token = this.authService.getToken();
-              console.log('New token:', token);
               const newHeaders = new HttpHeaders().set('Authorization', `Bearer ${token}`);
               return this.http.post(`${this.baseUrl}/generate-questions/`, data, { headers: newHeaders });
             })

@@ -1,41 +1,112 @@
 .container {
-    padding: 20px;
-    margin-bottom: 80px; // Adjust to avoid footer overlap
-  }
-  
-  .loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  
-  .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    border-top: 4px solid #007bff;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
-  .questions {
-    margin-top: 20px;
-  }
-  
-  .questions ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .questions li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  color: #555;
+}
+
+textarea, 
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+textarea:focus, 
+input[type="number"]:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.questions {
+  margin-top: 20px;
+}
+
+.questions h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.questions ul {
+  list-style: none;
+  padding: 0;
+}
+
+.questions li {
+  background-color: #fff;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.questions li ul {
+  margin-top: 10px;
+}
+
+.questions li ul li {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.no-questions {
+  text-align: center;
+  margin-top: 20px;
+  color: #888;
+}
