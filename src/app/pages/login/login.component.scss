@@ -1,0 +1,91 @@
+// Variables
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$text-color: #333;
+$input-border-color: #ccc;
+$input-focus-border-color: $primary-color;
+$input-background-color: #fff;
+$input-label-color: $secondary-color;
+$button-background-color: $primary-color;
+$button-text-color: #fff;
+$button-hover-background-color: darken($primary-color, 10%);
+$background-color: #f9f9f9;
+
+// Mixins
+@mixin input-focus {
+  &:focus {
+    border-color: $input-focus-border-color;
+    box-shadow: 0 0 5px rgba($input-focus-border-color, 0.5);
+    outline: none;
+  }
+}
+
+// Styling the form
+.login-form {
+  max-width: 400px;
+  margin: 2rem auto;  // Added margin from top
+  padding: 2rem;
+  background-color: $background-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+
+  .form-title {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: $primary-color;
+  }
+
+  .input-field {
+    position: relative;
+    margin-bottom: 1.5rem;
+    text-align: left;
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid $input-border-color;
+      border-radius: 4px;
+      background-color: $input-background-color;
+      color: $text-color;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+      @include input-focus;
+
+      &:valid + label,
+      &:focus + label {
+        top: -0.75rem;
+        font-size: 0.75rem;
+        color: $input-focus-border-color;
+      }
+    }
+
+    label {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      color: $input-label-color;
+      pointer-events: none;
+      transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+      padding-left: 0.5rem; // Adds distance from other elements
+      margin-top: 0.5rem;   // Adds margin above the label
+    }
+  }
+
+  .btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: $button-background-color;
+    color: $button-text-color;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $button-hover-background-color;
+    }
+  }
+}
