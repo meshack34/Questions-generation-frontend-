@@ -36,17 +36,29 @@
   </div>
 
   <!-- Display generated questions -->
+  
   <div *ngIf="!loading && questions.length > 0" class="questions">
     <h3>Generated Questions</h3>
     <ul>
       <li *ngFor="let question of questions">
-        {{ question.question }}
-        <ul *ngIf="question.answer">
-          <li>{{ question.answer }}</li>
+        <strong>{{ question.question }}</strong>
+        <ul *ngIf="isArray(question.answer)">
+          <li *ngFor="let ans of question.answer">
+            {{ ans.answer }} <span *ngIf="ans.correct">(Correct)</span>
+          </li>
         </ul>
+        <p *ngIf="!isArray(question.answer)">
+          {{ question.answer }}
+        </p>
       </li>
     </ul>
+    <!-- <button (click)="saveAsTextFile()" class="btn btn-secondary">Save as Text File</button> -->
   </div>
+  
+  <div *ngIf="!loading && questions.length === 0" class="no-questions">
+    <p>No questions available. Please try again.</p>
+  </div>
+  
 
   <!-- Display message if no questions are generated -->
   <div *ngIf="!loading && questions.length === 0" class="no-questions">

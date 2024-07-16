@@ -44,11 +44,7 @@ export class HomeComponent implements OnInit {
     this.questionService.generateQuestions(this.questionForm.value)
       .subscribe(
         data => {
-          if (data && data.questions) {
-            this.questions = data.questions;
-          } else {
-            this.questions = [];
-          }
+          this.questions = data.questions || [];
           this.loading = false;
         },
         error => {
@@ -57,6 +53,36 @@ export class HomeComponent implements OnInit {
         }
       );
   }
+  isArray(value: any): boolean {
+    return Array.isArray(value);
+  }
+
+  // saveAsTextFile() {
+  //   let text = '';
+  //   this.questions.forEach(q => {
+  //     text += `Question: ${q.question}\n`;
+  //     if (Array.isArray(q.answer)) {
+  //       q.answer.forEach(ans => {
+  //         text += `Answer: ${ans.answer} ${ans.correct ? '(Correct)' : ''}\n`;
+  //       });
+  //     } else {
+  //       text += `Answer: ${q.answer}\n`;
+  //     }
+  //     text += '\n';
+  //   });
+
+  //   const blob = new Blob([text], { type: 'text/plain' });
+  //   const url = window.URL.createObjectURL(blob);
+  //   const a = document.createElement('a');
+  //   a.href = url;
+  //   a.download = 'questions.txt';
+  //   a.click();
+  //   window.URL.revokeObjectURL(url);
+  // }
+
+  // isArray(value: any): boolean {
+  //   return Array.isArray(value);
+  // }
 
   logout() {
     this.authService.logout();
