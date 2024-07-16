@@ -1,8 +1,31 @@
-<form (ngSubmit)="onRegister()">
-  <input type="text" [(ngModel)]="first_name" name="first_name" placeholder="First Name" required>
-  <input type="text" [(ngModel)]="last_name" name="last_name" placeholder="Last Name" required>
-  <input type="text" [(ngModel)]="username" name="username" placeholder="Username" required>
-  <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required>
-  <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required>
-  <button type="submit">Register</button>
-</form>
+<div class="registration-form-container">
+  <h2 class="form-title">Register</h2>
+  <form (ngSubmit)="onRegister()" class="registration-form">
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input type="text" [(ngModel)]="first_name" name="first_name" id="first_name" placeholder="First Name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input type="text" [(ngModel)]="last_name" name="last_name" id="last_name" placeholder="Last Name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" [(ngModel)]="username" name="username" id="username" placeholder="Username" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" [(ngModel)]="email" name="email" id="email" placeholder="Email" required>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" [(ngModel)]="password" name="password" id="password" placeholder="Password" required>
+    </div>
+
+    <button type="submit" class="submit-button">Register</button>
+  </form>
+</div>

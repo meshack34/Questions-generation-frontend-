@@ -1,0 +1,101 @@
+.about-us {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      
+      h1 {
+        font-size: 2.5rem;
+        color: #333;
+      }
+    }
+  
+    section {
+      margin-bottom: 30px;
+      padding: 20px;
+      border-radius: 8px;
+    }
+  
+    .overview {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      
+      h2 {
+        font-size: 2rem;
+        color: #555;
+      }
+      
+      p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  
+    .features {
+      background-color: #e9f5ff;
+      border: 1px solid #b3d7ff;
+      
+      h2 {
+        font-size: 2rem;
+        color: #333;
+      }
+  
+      ul {
+        list-style-type: disc;
+        padding-left: 20px;
+  
+        li {
+          font-size: 1.1rem;
+          color: #555;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  
+    .benefits {
+      background-color: #fff9e6;
+      border: 1px solid #f3d9b0;
+      
+      h2 {
+        font-size: 2rem;
+        color: #333;
+      }
+  
+      p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+      }
+    }
+  
+    .contact {
+      background-color: #e6f9e6;
+      border: 1px solid #b3f0b3;
+      
+      h2 {
+        font-size: 2rem;
+        color: #333;
+      }
+  
+      p {
+        font-size: 1.1rem;
+        color: #666;
+        line-height: 1.6;
+  
+        a {
+          color: #007bff;
+          text-decoration: none;
+  
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+  

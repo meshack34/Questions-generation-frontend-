@@ -52,14 +52,8 @@
         </p>
       </li>
     </ul>
-    <!-- <button (click)="saveAsTextFile()" class="btn btn-secondary">Save as Text File</button> -->
+    <button (click)="saveAsPDF()" class="btn btn-secondary">Save as PDF</button>
   </div>
-  
-  <div *ngIf="!loading && questions.length === 0" class="no-questions">
-    <p>No questions available. Please try again.</p>
-  </div>
-  
-
   <!-- Display message if no questions are generated -->
   <div *ngIf="!loading && questions.length === 0" class="no-questions">
     <p>No questions available. Please try again.</p>

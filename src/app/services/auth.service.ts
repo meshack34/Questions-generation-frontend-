@@ -26,10 +26,10 @@ export class AuthService {
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/login/`, credentials).pipe(
       tap((response: any) => {
-        console.log('Login response:', response); // Added line
-        localStorage.setItem('token', response.access); // Store access token upon successful login
-        localStorage.setItem('refresh', response.refresh); // Store refresh token upon successful login
-        this.router.navigate(['/home']); // Navigate to authenticated route
+        console.log('Login response:', response); 
+        localStorage.setItem('token', response.access); 
+        localStorage.setItem('refresh', response.refresh); 
+        this.router.navigate(['/home']); 
       })
     );
   }
@@ -52,7 +52,7 @@ export class AuthService {
     if (refresh) {
       return this.http.post(`${this.baseUrl}/refresh/`, { refresh }).pipe(
         tap((response: any) => {
-          console.log('Token refreshed:', response); // Added line
+          console.log('Token refreshed:', response); 
           localStorage.setItem('token', response.access); // Store new access token
         })
       );

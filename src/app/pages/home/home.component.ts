@@ -1,7 +1,11 @@
+// src/app/pages/home/home.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { QuestionService } from '../../services/question.service';
+import { Question, MultipleChoiceAnswer } from '../../models/question.model';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +16,7 @@ export class HomeComponent implements OnInit {
   questionForm!: FormGroup;
   submitted = false;
   loading = false;
-  questions: any[] = [];
+  questions: Question[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,38 +57,65 @@ export class HomeComponent implements OnInit {
         }
       );
   }
-  isArray(value: any): boolean {
-    return Array.isArray(value);
+
+  saveAsPDF() {
+    const doc = new jsPDF();
+    const questionsContainer = document.createElement('div');
+    questionsContainer.classList.add('pdf-container');
+
+    this.questions.forEach(question => {
+      const questionElement = document.createElement('div');
+      questionElement.classList.add('pdf-question');
+
+      const questionText = document.createElement('strong');
+      questionText.textContent = question.question;
+      questionElement.appendChild(questionText);
+
+      if (Array.isArray(question.answer)) {
+        (question.answer as MultipleChoiceAnswer[]).forEach((ans: MultipleChoiceAnswer) => {
+          const answerText = document.createElement('p');
+          answerText.textContent = `${ans.answer} ${ans.correct ? '(Correct)' : ''}`;
+          questionElement.appendChild(answerText);
+        });
+      } else {
+        const answerText = document.createElement('p');
+        answerText.textContent = question.answer;
+        questionElement.appendChild(answerText);
+      }
+
+      questionsContainer.appendChild(questionElement);
+    });
+
+    document.body.appendChild(questionsContainer);
+
+    html2canvas(questionsContainer).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 295; // A4 height in mm
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        doc.addPage();
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      doc.save('questions.pdf');
+      document.body.removeChild(questionsContainer);
+    });
   }
-
-  // saveAsTextFile() {
-  //   let text = '';
-  //   this.questions.forEach(q => {
-  //     text += `Question: ${q.question}\n`;
-  //     if (Array.isArray(q.answer)) {
-  //       q.answer.forEach(ans => {
-  //         text += `Answer: ${ans.answer} ${ans.correct ? '(Correct)' : ''}\n`;
-  //       });
-  //     } else {
-  //       text += `Answer: ${q.answer}\n`;
-  //     }
-  //     text += '\n';
-  //   });
-
-  //   const blob = new Blob([text], { type: 'text/plain' });
-  //   const url = window.URL.createObjectURL(blob);
-  //   const a = document.createElement('a');
-  //   a.href = url;
-  //   a.download = 'questions.txt';
-  //   a.click();
-  //   window.URL.revokeObjectURL(url);
-  // }
-
-  // isArray(value: any): boolean {
-  //   return Array.isArray(value);
-  // }
 
   logout() {
     this.authService.logout();
+  }
+
+  isArray(value: any): value is MultipleChoiceAnswer[] {
+    return Array.isArray(value);
   }
 }
